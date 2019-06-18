@@ -24,11 +24,15 @@ namespace GalleryService.Controllers
             return Ok(gallery);
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet("{userId:int}")]
         [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
         public async Task<ActionResult<GalleryResponse>> Get(int userId)
         {
             var gallery = await _galleryManager.GetGalleryForUserAsync(userId);
+            if (gallery == null)
+                return NotFound();
+
             return Ok(gallery);
         }
     }

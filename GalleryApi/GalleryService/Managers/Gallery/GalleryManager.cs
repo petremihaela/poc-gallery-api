@@ -33,13 +33,14 @@ namespace GalleryService.Managers.Gallery
 
         public async Task<GalleryResponse> GetGalleryForUserAsync(int userId)
         {
-            var gallery = new GalleryResponse();
             var albums = await _albumManager.GetAlbumsForUserAsync(userId);
 
             var galleryAlbums = albums.ToList();
 
             if (!galleryAlbums.Any())
-                return gallery;
+                return null;
+
+            var gallery = new GalleryResponse();
 
             var albumsId = galleryAlbums.Select(a => a.Id);
             gallery.Albums = galleryAlbums;

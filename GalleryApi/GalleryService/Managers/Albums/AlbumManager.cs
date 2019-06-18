@@ -27,7 +27,6 @@ namespace GalleryService.Managers.Albums
 
         public async Task<IEnumerable<Album>> GetAlbumsForUserAsync(int userId)
         {
-
             var client = _clientFactory.CreateClient(GalleryConstants.GallerySourceProviderName);
             var requestUri = $"{GalleryConstants.AlbumsUri}/?userId{userId}";
             var albumsResponse = await client.GetAsync(requestUri);
