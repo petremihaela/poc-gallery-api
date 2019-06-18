@@ -1,4 +1,4 @@
-﻿using GalleryService.Managers;
+﻿using GalleryService.Managers.Token;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Linq;

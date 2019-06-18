@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace GalleryService.Managers
+namespace GalleryService.Managers.Token
 {
     public class TokenManager : ITokenManager
     {

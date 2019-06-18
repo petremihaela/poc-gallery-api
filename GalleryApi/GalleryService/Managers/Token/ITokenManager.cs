@@ -1,4 +1,4 @@
-﻿namespace GalleryService.Managers
+﻿namespace GalleryService.Managers.Token
 {
     public interface ITokenManager
     {

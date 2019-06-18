@@ -1,10 +1,14 @@
-﻿using GalleryService.Managers;
+﻿using GalleryService.Managers.Albums;
+using GalleryService.Managers.Gallery;
+using GalleryService.Managers.Photos;
+using GalleryService.Managers.Token;
 using GalleryService.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace GalleryService
 {
@@ -19,12 +23,17 @@ namespace GalleryService
 
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddTransient<ITokenManager, TokenManager>();
+            services.AddTransient<IGalleryManager, GalleryManager>();
+            services.AddTransient<IAlbumManager, AlbumManager>();
+            services.AddTransient<IPhotoManager, PhotoManager>();
+
+            services.AddHttpClient("gallerySourceProvider", c =>
+            {
+                c.BaseAddress = new Uri(Configuration["GallerySourceProvider"]);
+            });
 
             services.AddRouting(options => options.LowercaseUrls = true);
-
-
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -37,10 +46,9 @@ namespace GalleryService
             }
             else
             {
+                app.UseTokenAuthorization();
                 app.UseHsts();
             }
-
-            app.UseTokenAuthorization();
 
             app.UseHttpsRedirection();
             app.UseMvc();
